@@ -12,6 +12,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -27,10 +28,10 @@ public class SimpleFormDemoTest {
 	private String hub = "@hub.lambdatest.com/wd/hub";
 
 
-	 By SimpleForm  = By.xpath("//a[normalize-space()='Simple Form Demo']");
-	 By EnterMessage = By.xpath("//input[@id='user-message']");
-	 By CLickChecked = By.xpath("//button[@id='showInput']");
-	 By YourMessage = By.cssSelector("div#user-message #message");
+	By SimpleForm  = By.xpath("//a[normalize-space()='Simple Form Demo']");
+	By EnterMessage = By.xpath("//input[@id='user-message']");
+	By CLickChecked = By.xpath("//button[@id='showInput']");
+	By YourMessage = By.cssSelector("div#user-message #message");
 
 
 
@@ -40,8 +41,10 @@ public class SimpleFormDemoTest {
 	@BeforeMethod	
 	public void setUp(String browser, String version, String platform) {
 		ChromeOptions browserOptions = new ChromeOptions();
-		browserOptions.setPlatformName(platform);
+		browserOptions.addArguments("--remote-allow-origins=*");
+		browserOptions.getBrowserName();
 		browserOptions.setBrowserVersion(version);
+		browserOptions.setPlatformName(platform);
 		HashMap<String, Object> ltOptions = new HashMap<String, Object>();
 		ltOptions.put("visual", true);
 		ltOptions.put("video", true);

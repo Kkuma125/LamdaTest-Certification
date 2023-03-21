@@ -39,6 +39,7 @@ public class DragDropSlidersTest  {
 	@BeforeMethod	
 	public void setUp(String browser, String version, String platform) {
 		ChromeOptions browserOptions = new ChromeOptions();
+		browserOptions.addArguments("--remote-allow-origins=*");
 		browserOptions.setPlatformName(platform);
 		browserOptions.setBrowserVersion(version);
 		HashMap<String, Object> ltOptions = new HashMap<String, Object>();
