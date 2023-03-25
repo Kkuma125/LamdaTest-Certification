@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite thread-count="1" name="LambaTestSuite" parallel="tests" verbose="3">
+
+	<test name="Testing On Chrome">
+		<parameter name="browserName" value="Chrome"></parameter>
+		<parameter name="browserVersion" value="110.0"> </parameter>
+		<parameter name="osVersion" value="windows11"> </parameter>
+		<classes>
+			<class name="LamdaTest.DragDropSlidersTest" />
+			<class name="LamdaTest.SimpleFormDemoTest" />
+			<class name="LamdaTest.UserInputForm" />
+
+
+		</classes>
+
+	</test>
+	<test name="Testing On Firefox">
+		<parameter name="browserName" value="Firefox"> </parameter>
+		<parameter name="browserVersion" value="110.0"> </parameter>
+		<parameter name="osVersion" value="windows11"> </parameter>
+		<classes>
+			<class name="LamdaTest.DragDropSlidersTest" />
+			<class name="LamdaTest.SimpleFormDemoTest" />
+			<class name="LamdaTest.UserInputForm" />
+
+		</classes>
+	</test> <!--
+	Test -->
+
+
+</suite>

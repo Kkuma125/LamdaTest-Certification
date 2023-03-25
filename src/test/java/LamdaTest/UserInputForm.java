@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -18,31 +19,38 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+public class UserInputForm {
 
-
-public class SimpleFormDemoTest {
 
 	public RemoteWebDriver driver = null;
 
-	             //Test Scenario 1:
+	           //Test Scenario 3:
 
 
 	private String username = "kumar95530";
 	private  String accessKey = "vJU4bQvzg6oI6XQrGW9BLG6PyeRi9nnP9RvW5z7SizVLleFMHF";
 	private  String hub = "@hub.lambdatest.com/wd/hub";
 
-
-
-	By SimpleForm  = By.xpath("//a[normalize-space()='Simple Form Demo']");
-	By EnterMessage = By.xpath("//input[@id='user-message']");
-	By CLickChecked = By.xpath("//button[@id='showInput']"); 
-	By YourMessage = By.cssSelector("div#user-message #message");
-
+	By clickinput = By.xpath("//a[normalize-space()='Input Form Submit']");
+	By name = By.xpath("//input[@id='name']");
+	By emailid = By.xpath("//input[@id='inputEmail4']");
+	By password = By.xpath("//input[@id='inputPassword4']");
+	By company = By.xpath("//input[@id='company']");
+	By website = By.xpath("//input[@id='websitename']");
+	By country = By.xpath("//select[@name='country']");
+	By city = By.xpath("//input[@id='inputCity']");
+	By address1 = By.xpath("//input[@id='inputAddress1']");
+	By address2 = By.xpath("//input[@id='inputAddress2']");
+	By state = By.xpath("//input[@id='inputState']");
+	By zipcode = By.xpath("//input[@id='inputZip']");
+	By button = By.xpath("//button[text()='Submit']");
+	By SuccessMessage = By.xpath("//p[@class='success-msg hidden']");
+	By windowpopup = By.id("exit_popup_close");
 
 
 	@Parameters({"browserName", "browserVersion", "osVersion"})
 	@BeforeMethod
-	public void setUp1(String browser, String browserVersion, String osVersion) {
+	public void setUp3(String browser, String browserVersion, String osVersion) {
 
 		ChromeOptions browserOptions = new ChromeOptions();
 		browserOptions.setCapability("browserName", browser);
@@ -53,7 +61,7 @@ public class SimpleFormDemoTest {
 		ltOptions.put("visual", true);
 		ltOptions.put("video", true);
 		ltOptions.put("network", true);
-		ltOptions.put("project", "SimpleFormDemo");
+		ltOptions.put("project", "User Inpiut Form");
 		ltOptions.put("console", "true");
 
 
@@ -74,41 +82,36 @@ public class SimpleFormDemoTest {
 
 
 	}
-
-
-
 	@Test
-	public void SimpleForm () {
+	public void userInputvalidation() {
 
-		waitForElementVisible(SimpleForm, 10);
+		getElement(clickinput);
+		doClick(clickinput);
+		doSendKeys(name, "Vinod");
+		doSendKeys(emailid, "vinod@gmail.com");
+		doSendKeys(password, "12345");
+		doSendKeys(company, "abc");
+		doSendKeys(website, "xyz.com");
+		waitForElementVisible(windowpopup, 10);
+		doClick(windowpopup);
+		doDropDownSelectByVisibleText(country, "United States");
+		doSendKeys( city, "New York");
+		doSendKeys(address1, "New York, NY 10011");
+		doSendKeys(address2, "13th Street");
+		doSendKeys(state, "New York");
+		doSendKeys(zipcode, "10001");
+		
+		waitForElementVisibleclickable(button, 10);
 
-		getElement(SimpleForm);
-
-		doClick(SimpleForm);
-
-		String value = "Welcome to LambdaTest";
-		doSendKeys(EnterMessage, value);
-		getElement(CLickChecked);
-		doClick(CLickChecked); 
-
-
-		String YourMes = getElement(YourMessage).getText();
-		System.out.println(YourMes);
-		Assert.assertEquals(YourMes, "Welcome to LambdaTest");  //Verifying YourMessage Contains Welcome to LambdaTest
-
-
-
-		String url = driver.getCurrentUrl();
-		System.out.println(url);
-
-		if(url.contains("https://www.lambdatest.com/selenium-playground")){
-			System.out.println("Pass");
-		}
-
-		else {
-			System.out.println("Fail");
-			Assert.assertEquals(url, "simple-form-demo");// Verifying URl Contains simple-form-demo
-		}
+		getElement(button);
+		doClick(button);
+		
+	
+		
+		
+		String Message = getElement(SuccessMessage).getText();
+		System.out.println(Message);
+		Assert.assertEquals(Message, "Thanks for contacting us, we will get back to you shortly."); //user validation success
 
 	}
 
@@ -134,6 +137,16 @@ public class SimpleFormDemoTest {
 		return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
 	}
 
+	private void doDropDownSelectByVisibleText(By locator, String value) {
+		Select select = new Select(getElement(locator));
+		select.selectByVisibleText(value);
+	}
+
+	private WebElement waitForElementVisibleclickable(By locator, int timeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(timeOut));
+		return wait.until(ExpectedConditions.elementToBeClickable(locator));
+
+	}
 
 	@AfterMethod
 	public void tearDown() {
@@ -141,3 +154,5 @@ public class SimpleFormDemoTest {
 		driver.quit();
 	}
 }
+
+
